@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+struct node* newnode(int data)
+{
+    struct node*node=(struct node*)malloc(sizeof(struct node));
+    node->data=data;
+    node->left=NULL;
+    node->right=NULL;
+    return node;
+}
+
+struct node* completetree(struct node*root,int a[],int i,int n)
+{
+    if(i<n){
+    struct node* temp=newnode(a[i]);
+    
+    root=temp;
+    root->left=completetree(root->left,a,2*i+1,n);
+    root->right=completetree(root->right,a,2*i+2,n);
+    }
+    return root;
+}
+void display_inorder(struct node*temp)
+{
+    if(temp!=NULL)
+    {
+        display_inorder(temp->left);
+        printf("%d ",temp->data);
+        display_inorder(temp->right);
+    }
+ 
+}
+void display_preorder(struct node*temp)
+{
+    if(temp!=NULL)
+    {
+       
+        printf("%d ",temp->data);
+         display_inorder(temp->left);
+        display_inorder(temp->right);
+    }
+    
+}
+void display_postorder(struct node*temp)
+{
+    if(temp!=NULL)
+    {
+        display_inorder(temp->left);
+        
+        display_inorder(temp->right);
+        printf("%d ",temp->data);
+    }
+  
+}
+int main()
+{
+    int n,i;
+    int a[20];
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    struct node* root=completetree(root,a,0,n);
+    display_inorder(root);
+       printf("\n");
+    display_preorder(root);   printf("\n");
+    display_postorder(root);   printf("\n");
+
+    return 0;
+}
